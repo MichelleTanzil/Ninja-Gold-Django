@@ -13,10 +13,12 @@ def index(request):
         request.session['moves'] = 15
     if 'display' not in request.session:
         request.session['display'] = 'none'
+    if 'win_condition' not in request.session:
+        request.session['win_condition'] = 500
     return render(request, 'first_app/index.html')
 
 
-def process_money(request):
+def process_money(request, location):
     dt_string = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
     gold_generator = {
         'farm': random.randint(10, 20),
@@ -27,15 +29,14 @@ def process_money(request):
     request.session['moves'] -= 1
     if request.session['moves'] == 0 or request.session['gold_amt'] >= 500:
         request.session['display'] = 'inline-block'
-        if request.session['gold_amt'] < 500:
+        if request.session['gold_amt'] < int(win_condition):
             request.session['activities'].append("<p style='color: red'>You lose! Reset to try again!</p>")
         else: 
             request.session['activities'].append("<p style='color: green'>You Win! Reset to play again!</p>")
     elif request.session['moves'] < 0:
         request.session['moves'] = 0
         request.session['activities'].append("<p style='color: red'>That's all the moves you have, reset to play again!</p>")
-    
-    location = request.POST["location"]
+
     if request.session['moves'] > 0:
         request.session['gold_amt'] += gold_generator[location]
 

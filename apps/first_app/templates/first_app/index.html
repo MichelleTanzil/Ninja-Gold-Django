@@ -10,38 +10,34 @@
 </head>
 <body>
   <p class="spacing">Your Gold: {{request.session.gold_amt}}</p>
+  <!-- Sensei Bonus Possible Solution -->
+  <!-- <p class="spacing">Goal for Gold: {{request.session.win_condition}}
+    <form action="/process_money", method="post">
+      {%csrf_token%}
+      <input type="text" name="win_condition">
+      <button type="submit">Submit</button>
+    </form> -->
+  </p>
   <div id="container">
     <div class="boxes">
       <h3>Farm</h3>
       <p>(earns 10-20 golds)</p>
-      <form action="/process_money" method="post">
-        {%csrf_token%}
-        <button type="submit" name="location" value="farm"> Find Gold!</button>
-      </form>
+      <a href="/process_money/farm">Find Gold!</a>
     </div>
     <div class="boxes">
       <h3>Cave</h3>
       <p>(earns 5-10 golds)</p>
-      <form action="/process_money" method="post">
-        {%csrf_token%}
-        <button type="submit" name="location" value="cave"> Find Gold!</button>
-      </form>
+      <a href="/process_money/cave">Find Gold!</a>
     </div>
     <div class="boxes">
       <h3>House</h3>
       <p>(earns 2-5 golds)</p>
-      <form action="/process_money" method="post">
-        {%csrf_token%}
-        <button type="submit" name="location" value="house"> Find Gold!</button>
-      </form>
+      <a href="/process_money/house">Find Gold!</a>
     </div>
     <div class="boxes">
       <h3>Casino</h3>
       <p>(earns/takes 0-50 golds)</p>
-      <form action="/process_money" method="post">
-        {%csrf_token%}
-        <button type="submit" name="location" value="casino"> Find Gold!</button>
-      </form>
+      <a href="/process_money/casino">Find Gold!</a>
     </div>
   </div>
   <p class="spacing">Number of moves left: {{request.session.moves}}</p>
