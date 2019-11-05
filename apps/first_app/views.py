@@ -13,8 +13,6 @@ def index(request):
         request.session['moves'] = 15
     if 'display' not in request.session:
         request.session['display'] = 'none'
-    if 'win_condition' not in request.session:
-        request.session['win_condition'] = 500
     return render(request, 'first_app/index.html')
 
 
@@ -29,7 +27,7 @@ def process_money(request, location):
     request.session['moves'] -= 1
     if request.session['moves'] == 0 or request.session['gold_amt'] >= 500:
         request.session['display'] = 'inline-block'
-        if request.session['gold_amt'] < int(win_condition):
+        if request.session['gold_amt'] < 500:
             request.session['activities'].append("<p style='color: red'>You lose! Reset to try again!</p>")
         else: 
             request.session['activities'].append("<p style='color: green'>You Win! Reset to play again!</p>")
