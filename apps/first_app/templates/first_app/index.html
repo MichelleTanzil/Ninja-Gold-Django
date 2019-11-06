@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Ninja Gold</title>
   {% load static %}
-      <link rel="stylesheet" href="{% static 'first_app/css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'first_app/css/styles.css' %}">
 </head>
+
 <body>
   <p class="spacing">Your Gold: {{request.session.gold_amt}}</p>
-  <!-- Sensei Bonus Possible Solution -->
-  <!-- <p class="spacing">Goal for Gold: {{request.session.win_condition}}
-    <form action="/process_money", method="post">
-      {%csrf_token%}
-      <input type="text" name="win_condition">
-      <button type="submit">Submit</button>
-    </form> -->
+
   </p>
   <div id="container">
     <div class="boxes">
@@ -40,16 +36,25 @@
       <a href="/process_money/casino">Find Gold!</a>
     </div>
   </div>
-  <p class="spacing">Number of moves left: {{request.session.moves}}</p>
+  <p class="spacing">Number of moves left: {{request.session.move_goal}}</p>
   <p class="spacing">Activities:</p>
   <div id="acitivies">
     {%for activity in request.session.activities reversed%}
-      {{activity|safe}}
+    {{activity|safe}}
     {%endfor%}
   </div>
   <form action="/reset" method="POST">
     {%csrf_token%}
     <input type="submit" value="Reset" style="display:{{request.session.display}}">
   </form>
+
+  <p class="spacing" style="display: {{request.session.display_goal}}">Win Conditions: </p>
+    <form action="/start", method="post" style="display: {{request.session.display_goal}}">
+      {%csrf_token%}
+      <input type="text" name="gold_goal" placeholder="Enter your gold goal" required>
+      <input type="text" name="move_goal" placeholder="Enter your move goal" required>
+      <button type="submit">Submit</button>
+    </form>
 </body>
+
 </html>
